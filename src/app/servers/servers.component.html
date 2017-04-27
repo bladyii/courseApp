@@ -1,30 +1,31 @@
 <label>Server Name</label>
-<input 
-type="text"
-class="form-control"
-[(ngModel)]="serverName">
+<input type="text" class="form-control" [(ngModel)]="serverName">
 <br>
 <!--<p>{{serverName}}</p>-->
-<hr>
 <button class="btn btn-primary" [disabled]="!allowNewServer" (click)="onCreateServer()">Add Server</button>
 <br>
 <br>
-<p>{{serverCreationStatus}}</p>
+<!--<p>{{serverCreationStatus}}</p>-->
+<p *ngIf="serverCreated; else noServer">Server was created, server name is {{serverName}}</p>
 <hr>
-<app-server></app-server>
+<app-server *ngFor="let server of servers"></app-server>
 <hr>
 <label>User Name</label>
-<input 
-type="text"
-class="form-control"
-[(ngModel)]="userName"
-(input)="onButtonUpdateUserName()"
->
+<input type="text" class="form-control" [(ngModel)]="userName" (input)="onButtonUpdateUserName()">
 <br>
 <p>{{userName}}</p>
 <br>
-<button 
-class="btn btn-primary" 
-[disabled]="!updateUserName"
-(click)="onUpdateUserName()">Update User Name</button>
+<button class="btn btn-primary" [disabled]="!updateUserName" (click)="onUpdateUserName()">Update User Name</button>
 <hr>
+<button class="btn btn-primary" (click)="toggleDetails()">
+See Details
+</button>
+<h2 *ngIf="detailsVisible">
+    Secret Password is Dounat
+</h2>
+
+<div
+*ngFor="let password of passwords"
+[ngStyle]="{backgroundColor: password >= 5 ? 'blue' : 'transparent'}"
+[ngClass]="{'five': password >= 5}" 
+>{{password}}</div>
